@@ -2,14 +2,14 @@
   "name": "dom-testing",
   "version": "1.0.1",
   "author": "lkl191",
-  "main": "lib",
+  "main": "dist",
   "files": [
-    "lib"
+    "dist"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "tsc -d",
-    "prepublishOnly": "yarn build"
+    "build": "tsc -D",
+    "prepublishOnly": "tsc -D"
   },
   "devDependencies": {
     "typescript": "^4.5.5"
