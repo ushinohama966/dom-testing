@@ -2,9 +2,9 @@
   "name": "dom-testing",
   "version": "1.0.2",
   "author": "lkl191",
-  "main": "dist",
+  "main": "lib/dom-testing.js",
   "files": [
-    "dist"
+    "lib"
   ],
   "license": "MIT",
   "scripts": {
