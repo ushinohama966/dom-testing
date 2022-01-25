@@ -1,5 +1,5 @@
 export const clickButton = (id: string) => {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const button = document.getElementById(id);
     //let cnt = 5;
     //let len_cnt = 0;
@@ -16,16 +16,15 @@ export const clickButton = (id: string) => {
       }, 200);
       */
     } else {
-      alert("id: " + id + "が見つかりませんでした");
+      console.log("id: " + id + "が見つかりませんでした");
       reject("clickButton");
     }
   });
-  return promise;
 };
 
 export const inputString = (id: string, str: string, inputTime?: number) => {
   // inputのtypeがわからない
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const sleep_time = inputTime || 50;
     let len_cnt = 0;
     const input: any = document.getElementById(id);
@@ -41,27 +40,34 @@ export const inputString = (id: string, str: string, inputTime?: number) => {
         }
       }, sleep_time);
     } else {
-      alert("id: " + id + "が見つかりませんでした");
+      console.log("id: " + id + "が見つかりませんでした");
       reject("inputString");
     }
   });
-  return promise;
+};
+
+export const testSleep = (sleep_time: number) => {
+  return new Promise((resolve, reject) => {
+    console.log("test is sleeping...");
+    try {
+      const timer = setInterval(() => {
+        clearTimeout(timer);
+        resolve(1);
+      }, sleep_time);
+    } catch (err) {
+      reject(console.error(err));
+    }
+  });
 };
 
 export const syncDoTest = (tests: any[], startIndex = 0) => {
   if (startIndex >= tests.length) return;
-  // console.log("test" + startIndex);
   tests[startIndex]()
     .then(() => {
-      console.log("test" + startIndex + " >>> success");
+      console.log("test" + (startIndex + 1) + " >>> success");
       syncDoTest(tests, startIndex + 1);
     })
     .catch(() => {
-      console.log("test" + startIndex + ">>> failed");
+      console.log("test" + (startIndex + 1) + ">>> failed");
     });
-
-  // for (let i = 0; i < tests.length; i++) {
-  //   console.log("test" + (i + 1).toString());
-  //   tests[i]()
-  // }
 };
