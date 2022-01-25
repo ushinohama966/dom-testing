@@ -2,7 +2,7 @@
   "name": "dom-testing",
   "version": "1.0.4",
   "author": "lkl191",
-  "main": "lib/dom-test.js",
+  "main": "lib/dom-testing.js",
   "files": [
     "lib"
   ],

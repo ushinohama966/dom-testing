@@ -50,13 +50,14 @@ export const inputString = (id: string, str: string, inputTime?: number) => {
 
 export const syncDoTest = (tests: any[], startIndex = 0) => {
   if (startIndex >= tests.length) return;
-  console.log("test" + startIndex);
+  // console.log("test" + startIndex);
   tests[startIndex]()
     .then(() => {
+      console.log("test" + startIndex + " >>> success");
       syncDoTest(tests, startIndex + 1);
     })
     .catch(() => {
-      console.log(startIndex + "番目のテストに失敗しました");
+      console.log("test" + startIndex + ">>> failed");
     });
 
   // for (let i = 0; i < tests.length; i++) {
