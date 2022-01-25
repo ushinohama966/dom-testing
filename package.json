@@ -1,0 +1,12 @@
+{
+  "name": "dom-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -d"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
