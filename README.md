@@ -24,10 +24,10 @@ import {
 } from "../lib/dom-test/lib/dom-test";
 
 syncDoTest([
-            clickButton.bind(null, "sum-btn"),
-            inputString.bind(null, "input-email", "test@xxx.com"),
-            inputString.bind(null, "input-pass", "123456"),
-            clickButton.bind(null, "submit"),
+            clickButton.bind(null, "element id"),
+            inputString.bind(null, "element id", "test@xxx.com"),
+            inputString.bind(null, "element id", "123456"),
+            clickButton.bind(null, "element id"),
 ]);
 
 ```
