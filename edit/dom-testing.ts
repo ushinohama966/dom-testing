@@ -22,6 +22,13 @@ export const clickButton = (id: string) => {
   });
 };
 
+interface InputStringProp {
+  test_name?: string;
+  id: string;
+  str: string;
+  inputTime?: number;
+}
+
 export const inputString = (id: string, str: string, inputTime?: number) => {
   // inputのtypeがわからない
   return new Promise((resolve, reject) => {
@@ -36,12 +43,13 @@ export const inputString = (id: string, str: string, inputTime?: number) => {
         len_cnt++;
         if (len_cnt >= str.length) {
           clearInterval(timer);
+          // resolve(console.log(test_name + " >>> success!"));
           resolve(1);
         }
       }, sleep_time);
     } else {
-      console.log("id: " + id + "が見つかりませんでした");
-      reject("inputString");
+      // reject(console.log(test_name + " >>> failed"));
+      reject(0);
     }
   });
 };
@@ -68,6 +76,6 @@ export const syncDoTest = (tests: any[], startIndex = 0) => {
       syncDoTest(tests, startIndex + 1);
     })
     .catch(() => {
-      console.log("test" + (startIndex + 1) + ">>> failed");
+      console.log("test" + (startIndex + 1) + " >>> failed");
     });
 };
