@@ -1,6 +1,6 @@
 ## dom-testing
 
-dom 操作のテストを自動化するライブラリです
+A javascript library for dom operation test
 
 ## Install
 
