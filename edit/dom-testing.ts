@@ -99,25 +99,30 @@ const syncDoTest = (
   pass_cnt = 0,
   pass_arr: ("passed" | "failed")[] = []
 ) => {
-  console.log("test" + (start_index + 1));
+  console.log("test" + (start_index + 1) + " start");
   tests[start_index]()
     .then((value) => {
+      // if it is sleep func skip
       if (value == "sleep") {
         tests.splice(start_index, 1);
         start_index--;
       } else {
+        // test is passed
         pass_arr.push("passed");
         console.log("test" + (start_index + 1) + " >>> passed");
         pass_cnt++;
       }
     })
     .catch((err) => {
+      // test is failed
       pass_arr.push("failed");
       console.log(err);
       console.log("test" + (start_index + 1) + " >>> failed");
     })
     .finally(() => {
+      // test is over
       if (start_index + 1 >= tests.length) {
+        console.log("------------------------------");
         for (let i = 0; i < tests.length; i++) {
           console.log("test" + (i + 1) + " >>> " + pass_arr[i]);
         }
@@ -126,6 +131,7 @@ const syncDoTest = (
         );
         return;
       }
+      // sleep every test
       if (sleep_time != 0) {
         sleep(sleep_time).then(() => {
           syncDoTest(tests, sleep_time, start_index + 1, pass_cnt, pass_arr);
@@ -136,4 +142,12 @@ const syncDoTest = (
     });
 };
 
-export { syncDoTest, scroll, testSleep, inputString, clickButton };
+const syncTest = (
+  tests: (() => Promise<TestsReturnValue>)[],
+  sleep_time = 0
+  // start_index = 0,
+) => {
+  syncDoTest(tests, sleep_time);
+};
+
+export { syncTest, scroll, testSleep, inputString, clickButton };
