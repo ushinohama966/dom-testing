@@ -23,11 +23,10 @@ export const clickButton = (id: string) => {
 };
 
 export const inputString = (id: string, str: string, inputTime?: number) => {
-  
   return new Promise((resolve, reject) => {
     const sleep_time = inputTime || 50;
     let len_cnt = 0;
-    // any 
+    // any
     let input: any = document.getElementById(id);
 
     if (input) {
@@ -69,29 +68,17 @@ export const testSleep = (sleep_time: number) => {
   });
 };
 
-// cnt is not good
-// complexity recursion
-
-// dirty code
-export const scroll = (x: number, y: number, cntY = 1, cntX = 1) => {
+export const scroll = (x: number, y: number) => {
   return new Promise((resolve, reject) => {
     try {
       const shiftY = y - window.scrollY;
       const shiftX = x - window.scrollX;
 
-      if (shiftY < 0) cntY = -1;
-      if (shiftX < 0) cntX = -1;
-      const newY = window.scrollY + cntY;
-      const newX = window.scrollX + cntX;
+      const newY = shiftY != 0 ? window.scrollY + shiftY / Math.abs(shiftY) : y;
+      const newX = shiftX != 0 ? window.scrollX + shiftX / Math.abs(shiftX) : x;
+      window.scroll(newX, newY);
       if (shiftY == 0 && shiftX == 0) {
-        window.scroll(x, y);
         return resolve(1);
-      } else if (shiftX == 0) {
-        window.scroll(x, newY);
-      } else if (shiftY == 0) {
-        window.scroll(newX, y);
-      } else {
-        window.scroll(newX, newY);
       }
       sleep(1).then(() => {
         scroll(x, y).then(() => {
