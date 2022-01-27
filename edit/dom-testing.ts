@@ -91,15 +91,25 @@ export const scroll = (x: number, y: number) => {
   });
 };
 
-export const syncDoTest = (tests: any[], startIndex = 0) => {
-  if (startIndex >= tests.length)
-    return console.log("all(" + startIndex + ") tests are passed");
-  tests[startIndex]()
+export const syncDoTest = (
+  tests: (() => Promise<any>)[],
+  sleep_time = 0,
+  start_index = 0,
+  pass_cnt = 0
+) => {
+  if (start_index >= tests.length)
+    return console.log(
+      "(" + pass_cnt + "/" + start_index + ") tests are passed"
+    );
+  tests[start_index]()
     .then(() => {
-      console.log("test" + (startIndex + 1) + " >>> passed");
-      syncDoTest(tests, startIndex + 1);
+      console.log("test" + (start_index + 1) + " >>> passed");
+      pass_cnt++;
     })
     .catch(() => {
-      console.log("test" + (startIndex + 1) + " >>> failed");
+      console.log("test" + (start_index + 1) + " >>> failed");
+    })
+    .finally(() => {
+      syncDoTest(tests, sleep_time, start_index + 1, pass_cnt);
     });
 };
