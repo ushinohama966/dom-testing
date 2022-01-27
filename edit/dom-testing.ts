@@ -1,29 +1,29 @@
 type TestsReturnValue = number | "sleep";
 
-export const clickButton = (id: string) => {
+// class DomTesting {
+//   testFunction: () => Promise<TestsReturnValue>;
+//   test_name?: string;
+//   constructor(func: any) {
+//     this.testFunction = func;
+//   }
+//   name(s: string) {
+//     this.test_name = s;
+//   }
+// }
+
+const clickButton = (id: string) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     const button = document.getElementById(id);
-    //let cnt = 5;
-    //let len_cnt = 0;
     if (button) {
       button.click();
       resolve(1);
-      /*
-      const timer = setInterval(() => {
-        button.click();
-        len_cnt++;
-        if (len_cnt >= cnt) {
-          clearInterval(timer);
-        }
-      }, 200);
-      */
     } else {
       reject("not found id: " + id);
     }
   });
 };
 
-export const inputString = (id: string, str: string, inputTime?: number) => {
+const inputString = (id: string, str: string, inputTime?: number) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     const sleep_time = inputTime || 50;
     let len_cnt = 0;
@@ -47,7 +47,7 @@ export const inputString = (id: string, str: string, inputTime?: number) => {
 };
 
 const sleep = (sleep_time: number) => {
-  return new Promise((resolve) => {
+  return new Promise<1>((resolve) => {
     const timer = setInterval(() => {
       clearTimeout(timer);
       resolve(1);
@@ -55,7 +55,7 @@ const sleep = (sleep_time: number) => {
   });
 };
 
-export const testSleep = (sleep_time: number) => {
+const testSleep = (sleep_time: number) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     console.log("now sleeping...");
     try {
@@ -68,7 +68,7 @@ export const testSleep = (sleep_time: number) => {
   });
 };
 
-export const scroll = (x: number, y: number) => {
+const scroll = (x: number, y: number) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     try {
       const shiftY = y - window.scrollY;
@@ -92,31 +92,48 @@ export const scroll = (x: number, y: number) => {
 };
 
 // dirty code
-export const syncDoTest = (
+const syncDoTest = (
   tests: (() => Promise<TestsReturnValue>)[],
   sleep_time = 0,
   start_index = 0,
-  pass_cnt = 0
+  pass_cnt = 0,
+  pass_arr: ("passed" | "failed")[] = []
 ) => {
-  if (start_index >= tests.length)
-    return console.log(
-      "(" + pass_cnt + "/" + start_index + ") tests are passed"
-    );
+  console.log("test" + (start_index + 1));
   tests[start_index]()
     .then((value) => {
       if (value == "sleep") {
         tests.splice(start_index, 1);
         start_index--;
       } else {
+        pass_arr.push("passed");
         console.log("test" + (start_index + 1) + " >>> passed");
         pass_cnt++;
       }
     })
     .catch((err) => {
+      pass_arr.push("failed");
       console.log(err);
       console.log("test" + (start_index + 1) + " >>> failed");
     })
     .finally(() => {
-      syncDoTest(tests, sleep_time, start_index + 1, pass_cnt);
+      if (start_index + 1 >= tests.length) {
+        for (let i = 0; i < tests.length; i++) {
+          console.log("test" + (i + 1) + " >>> " + pass_arr[i]);
+        }
+        console.log(
+          "(" + pass_cnt + "/" + (start_index + 1) + ") tests are passed"
+        );
+        return;
+      }
+      if (sleep_time != 0) {
+        sleep(sleep_time).then(() => {
+          syncDoTest(tests, sleep_time, start_index + 1, pass_cnt, pass_arr);
+        });
+      } else {
+        syncDoTest(tests, sleep_time, start_index + 1, pass_cnt, pass_arr);
+      }
     });
 };
+
+export { syncDoTest, scroll, testSleep, inputString, clickButton };
