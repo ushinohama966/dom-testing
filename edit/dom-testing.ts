@@ -1,5 +1,7 @@
+type TestsReturnValue = number | "sleep";
+
 export const clickButton = (id: string) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<TestsReturnValue>((resolve, reject) => {
     const button = document.getElementById(id);
     //let cnt = 5;
     //let len_cnt = 0;
@@ -16,14 +18,13 @@ export const clickButton = (id: string) => {
       }, 200);
       */
     } else {
-      console.log("not found id: " + id);
-      reject("clickButton");
+      reject("not found id: " + id);
     }
   });
 };
 
 export const inputString = (id: string, str: string, inputTime?: number) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<TestsReturnValue>((resolve, reject) => {
     const sleep_time = inputTime || 50;
     let len_cnt = 0;
     // any
@@ -40,8 +41,7 @@ export const inputString = (id: string, str: string, inputTime?: number) => {
         }
       }, sleep_time);
     } else {
-      console.log("not found id: " + id);
-      reject(0);
+      reject("not found id: " + id);
     }
   });
 };
@@ -56,20 +56,20 @@ const sleep = (sleep_time: number) => {
 };
 
 export const testSleep = (sleep_time: number) => {
-  return new Promise((resolve, reject) => {
-    console.log("test is sleeping...");
+  return new Promise<TestsReturnValue>((resolve, reject) => {
+    console.log("now sleeping...");
     try {
       sleep(sleep_time).then(() => {
-        resolve(1);
+        resolve("sleep");
       });
     } catch (err) {
-      reject(console.error(err));
+      reject(err);
     }
   });
 };
 
 export const scroll = (x: number, y: number) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<TestsReturnValue>((resolve, reject) => {
     try {
       const shiftY = y - window.scrollY;
       const shiftX = x - window.scrollX;
@@ -86,13 +86,14 @@ export const scroll = (x: number, y: number) => {
         });
       });
     } catch (err) {
-      reject(console.log(err));
+      reject(err);
     }
   });
 };
 
+// dirty code
 export const syncDoTest = (
-  tests: (() => Promise<any>)[],
+  tests: (() => Promise<TestsReturnValue>)[],
   sleep_time = 0,
   start_index = 0,
   pass_cnt = 0
@@ -102,11 +103,17 @@ export const syncDoTest = (
       "(" + pass_cnt + "/" + start_index + ") tests are passed"
     );
   tests[start_index]()
-    .then(() => {
-      console.log("test" + (start_index + 1) + " >>> passed");
-      pass_cnt++;
+    .then((value) => {
+      if (value == "sleep") {
+        tests.splice(start_index, 1);
+        start_index--;
+      } else {
+        console.log("test" + (start_index + 1) + " >>> passed");
+        pass_cnt++;
+      }
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       console.log("test" + (start_index + 1) + " >>> failed");
     })
     .finally(() => {
