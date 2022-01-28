@@ -11,6 +11,26 @@ type TestsReturnValue = number | "sleep";
 //   }
 // }
 
+const matchElement = (id: string, expect: string) => {
+  return new Promise<TestsReturnValue>((resolve, reject) => {
+    const elem = document.getElementById(id);
+    if (!elem) return reject("not found id: " + id);
+    if (elem.innerHTML == expect) {
+      resolve(1);
+    } else {
+      reject(
+        "The expected value does not match the specified element" +
+          "\n" +
+          "elem.innerHTML: " +
+          elem.innerHTML +
+          "\n" +
+          "expect: " +
+          expect
+      );
+    }
+  });
+};
+
 const clickButton = (id: string) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     const button = document.getElementById(id);
@@ -117,7 +137,7 @@ const syncDoTest = (
       // test is failed
       pass_arr.push("failed");
       console.log(err);
-      console.log("test" + (start_index + 1) + " >>> failed");
+      console.error("test" + (start_index + 1) + " >>> failed");
     })
     .finally(() => {
       // test is over
@@ -149,4 +169,4 @@ const syncTest = (
   syncDoTest(tests, sleep_time);
 };
 
-export { syncTest, scroll, testSleep, inputString, clickButton };
+export { syncTest, scroll, testSleep, inputString, clickButton, matchElement };
