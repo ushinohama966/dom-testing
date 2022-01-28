@@ -20,10 +20,10 @@ yarn add -D dom-testing
 import {
   clickButton,
   inputString,
-  syncDoTest,
+  syncTest,
 } from "../lib/dom-test/lib/dom-test";
 
-syncDoTest([
+syncTest([
       clickButton.bind(null, "element id"),
       inputString.bind(null, "element id", "test@xxx.com"),
       inputString.bind(null, "element id", "123456"),
