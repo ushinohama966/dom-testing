@@ -145,7 +145,6 @@ const syncDoTest = (
 const syncTest = (
   tests: (() => Promise<TestsReturnValue>)[],
   sleep_time = 0
-  // start_index = 0,
 ) => {
   syncDoTest(tests, sleep_time);
 };
