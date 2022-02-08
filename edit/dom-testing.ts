@@ -66,6 +66,7 @@ const inputString = (id: string, str: string, inputTime?: number) => {
   });
 };
 
+// no export
 const sleep = (sleep_time: number) => {
   return new Promise<1>((resolve) => {
     const timer = setInterval(() => {
@@ -112,6 +113,7 @@ const scroll = (x: number, y: number) => {
 };
 
 // dirty code
+// no export
 const syncDoTest = (
   tests: (() => Promise<TestsReturnValue>)[],
   sleep_time = 0,
