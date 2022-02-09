@@ -41,4 +41,4 @@ syncTest([
 ```
 
 ## License
-MIT
+[MIT](https://github.com/lkl191/dom-testing/blob/master/LICENSE)
