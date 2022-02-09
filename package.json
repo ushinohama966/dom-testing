@@ -1,6 +1,6 @@
 {
   "name": "dom-testing",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "lkl191",
   "main": "lib/dom-testing.js",
   "files": [
