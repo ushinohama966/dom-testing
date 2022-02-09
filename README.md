@@ -30,7 +30,7 @@ syncTest([
     ]);
 
 syncTest([
-      matchElement.bind(null, "user-info-form", form_elem),
+      matchElement.bind(null, "element id", "expect id"),
       scroll.bind(null, 300, 300),
 ])
 
