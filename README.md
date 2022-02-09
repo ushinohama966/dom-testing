@@ -31,6 +31,7 @@ syncTest([
 
 syncTest([
       matchElement.bind(null, "element id", "expect id"),
+      testSleep.bind(null, 1000),
       scroll.bind(null, 300, 300),
 ])
 
