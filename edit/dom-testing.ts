@@ -1,16 +1,5 @@
 type TestsReturnValue = number | "sleep";
 
-// class DomTesting {
-//   testFunction: () => Promise<TestsReturnValue>;
-//   test_name?: string;
-//   constructor(func: any) {
-//     this.testFunction = func;
-//   }
-//   name(s: string) {
-//     this.test_name = s;
-//   }
-// }
-
 const matchElement = (id: string, expect: string) => {
   return new Promise<TestsReturnValue>((resolve, reject) => {
     const elem = document.getElementById(id);
