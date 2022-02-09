@@ -21,6 +21,9 @@ import {
   clickButton,
   inputString,
   syncTest,
+  matchElement,
+  testSleep,
+  scroll
 } from "../lib/dom-test/lib/dom-test";
 
 syncTest([
