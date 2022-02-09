@@ -29,6 +29,11 @@ syncTest([
       inputString.bind(null, "element id", "123456"),
     ]);
 
+syncTest([
+      matchElement.bind(null, "user-info-form", form_elem),
+      scroll.bind(null, 300, 300),
+])
+
 ```
 
 ## License
