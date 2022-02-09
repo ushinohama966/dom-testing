@@ -38,3 +38,6 @@ syncTest([
     ]);
 
 ```
+
+## License
+MIT
