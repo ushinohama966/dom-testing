@@ -26,17 +26,21 @@ import {
   scroll
 } from "../lib/dom-test/lib/dom-test";
 
-syncTest([
+const test = () => {
+  syncTest([
       inputString.bind(null, "element id", "test@xxx.com"),
       inputString.bind(null, "element id", "123456"),
       clickButton.bind(null, "element id"),
     ]);
+}
 
 syncTest([
       matchElement.bind(null, "element id", "expect string"),
       testSleep.bind(null, "sleeptime"),
       scroll.bind(null, x, y),
 ])
+
+<button onclick={test}>Test</button>
 
 ```
 
