@@ -1,7 +1,7 @@
 /*!
  * Copyright(c) 2022 lkl191(https://github.com/lkl191)
  * MIT
-*/
+ */
 type TestsReturnValue = number | "sleep";
 
 const matchElement = (id: string, expect: string) => {

@@ -1,3 +1,7 @@
+/*!
+ * Copyright(c) 2022 lkl191(https://github.com/lkl191)
+ * MIT
+ */
 declare type TestsReturnValue = number | "sleep";
 declare const matchElement: (id: string, expect: string) => Promise<TestsReturnValue>;
 declare const clickButton: (id: string) => Promise<TestsReturnValue>;
